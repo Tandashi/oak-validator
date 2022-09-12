@@ -1,0 +1,34 @@
+{
+  "compilerOptions": {
+    "allowJs": false,
+    "strict": true
+  },
+  "importMap": "import-map.json",
+  "lint": {
+    "files": {
+      "include": ["src/", "dependencies.ts"]
+    },
+    "rules": {
+      "tags": ["recommended"],
+      "include": ["ban-untagged-todo"],
+      "exclude": ["no-unused-vars"]
+    }
+  },
+  "fmt": {
+    "files": {
+      "include": ["src/", "dependencies.ts"]
+    },
+    "options": {
+      "useTabs": false,
+      "lineWidth": 160,
+      "indentWidth": 2,
+      "singleQuote": true,
+      "proseWrap": "preserve"
+    }
+  },
+  "test": {
+    "files": {
+      "include": ["test/"]
+    }
+  }
+}

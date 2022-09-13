@@ -38,7 +38,12 @@ export const isObjectId = () => isString({ minLength: 24, maxLength: 24 });
 
 export function validateBody(schema: ValidationSchema, failure: (ctx: Oak.Context) => unknown): Oak.Middleware {
   return async (ctx: Oak.Context, next: () => Promise<unknown>) => {
-    if (!validate(await ctx.request.body().value, schema)) {
+    try {
+      const body = await ctx.request.body().value;
+      if (!validate(body, schema)) {
+        return failure(ctx);
+      }
+    } catch (e) {
       return failure(ctx);
     }
 

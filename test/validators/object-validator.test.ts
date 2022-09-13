@@ -274,3 +274,44 @@ Deno.test('Object with ultra-shortform incorrect types is invalid', () => {
     false
   );
 });
+
+Deno.test('Object is valid when customRules are valid', () => {
+  assertEquals(
+    validateObject(
+      {
+        a: 'hi',
+      },
+      {
+        type: 'object',
+        customRules: [(value) => value['a'] !== undefined],
+      }
+    ),
+    true
+  );
+});
+
+Deno.test('Object is invalid when customRules are invalid', () => {
+  assertEquals(
+    validateObject(
+      {},
+      {
+        type: 'object',
+        customRules: [(value) => value['a'] !== undefined],
+      }
+    ),
+    false
+  );
+});
+
+Deno.test('Object is invalid when one customRule is invalid', () => {
+  assertEquals(
+    validateObject(
+      {},
+      {
+        type: 'object',
+        customRules: [() => true, () => false],
+      }
+    ),
+    false
+  );
+});

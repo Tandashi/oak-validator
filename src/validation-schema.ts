@@ -33,6 +33,11 @@ export interface ObjectValidationSchema extends BaseValidationSchema {
         }
       | ValidationType;
   };
+  /**
+   * A set of custom rules that need to be valid for the object to be considered
+   * valid as well.
+   */
+  customRules?: ((value: Record<string | number | symbol, unknown>) => boolean)[];
 }
 
 /**
@@ -86,6 +91,12 @@ export interface StringValidationSchema extends BaseValidationSchema {
    * The maximum length the string can have to be considered valid.
    */
   maxLength?: number;
+
+  /**
+   * A set of custom rules that need to be valid for the string to be considered
+   * valid as well.
+   */
+  customRules?: ((value: string) => boolean)[];
 }
 
 /**
@@ -106,6 +117,12 @@ export interface NumberValidationSchema extends BaseValidationSchema {
    * If not specified any number is considered valid.
    */
   value?: number;
+
+  /**
+   * A set of custom rules that need to be valid for the number to be considered
+   * valid as well.
+   */
+  customRules?: ((value: number) => boolean)[];
 }
 
 /**

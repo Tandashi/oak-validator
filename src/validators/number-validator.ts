@@ -30,5 +30,11 @@ export default function validateNumber(value: unknown, schema: NumberValidationS
     return false;
   }
 
+  // Check custom rules
+  if (schema.customRules !== undefined && !schema.customRules.every((rule) => rule(value))) {
+    // Not every custom rule returned true so the number is invalid.
+    return false;
+  }
+
   return true;
 }

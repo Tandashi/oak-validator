@@ -134,3 +134,33 @@ Deno.test('String with longer length as maximum is invalid', () => {
     false
   );
 });
+
+Deno.test('String is valid when customRules are valid', () => {
+  assertEquals(
+    validateString('123456', {
+      type: 'string',
+      customRules: [(value) => value.length === 6],
+    }),
+    true
+  );
+});
+
+Deno.test('String is invalid when customRules are invalid', () => {
+  assertEquals(
+    validateString('123456', {
+      type: 'string',
+      customRules: [(value) => value.length === 1],
+    }),
+    false
+  );
+});
+
+Deno.test('String is invalid when one customRule is invalid', () => {
+  assertEquals(
+    validateString('123456', {
+      type: 'string',
+      customRules: [(value) => value === '123456', (value) => value.length === 1],
+    }),
+    false
+  );
+});

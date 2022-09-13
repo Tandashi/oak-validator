@@ -9,6 +9,10 @@ export default function validateObject(value: unknown, schema: ObjectValidationS
     return false;
   }
 
+  if (value === null) {
+    return false;
+  }
+
   // Check if properties have been specified that should be checked against.
   if (
     schema.properties !== undefined &&
@@ -42,6 +46,15 @@ export default function validateObject(value: unknown, schema: ObjectValidationS
     })
   ) {
     // Not every object property was valid so the object is considered invalid.
+    return false;
+  }
+
+  // Check custom rules
+  if (
+    schema.customRules !== undefined &&
+    !schema.customRules.every((rule) => rule(value as Record<string | number | symbol, unknown>))
+  ) {
+    // Not every custom rule returned true so the object is invalid.
     return false;
   }
 

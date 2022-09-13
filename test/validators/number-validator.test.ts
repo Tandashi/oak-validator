@@ -107,3 +107,33 @@ Deno.test('Number invalid when its doesnt match the specified value', () => {
     false
   );
 });
+
+Deno.test('Number is valid when customRules are valid', () => {
+  assertEquals(
+    validateNumber(7, {
+      type: 'number',
+      customRules: [(value) => value % 2 === 1],
+    }),
+    true
+  );
+});
+
+Deno.test('Number is invalid when customRules are invalid', () => {
+  assertEquals(
+    validateNumber(7, {
+      type: 'number',
+      customRules: [(value) => value % 2 === 0],
+    }),
+    false
+  );
+});
+
+Deno.test('Number is invalid when onne customRule is invalid', () => {
+  assertEquals(
+    validateNumber(7, {
+      type: 'number',
+      customRules: [(value) => value % 2 === 1, (value) => value === 8],
+    }),
+    false
+  );
+});

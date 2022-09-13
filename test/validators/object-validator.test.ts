@@ -265,3 +265,56 @@ Deno.test('Object is valid when all required properties are set', () => {
     true
   );
 });
+
+Deno.test('Object is valid when strict mode is active and only specified properties are supplied', () => {
+  assertEquals(
+    validateObject(
+      {
+        hello: 1,
+      },
+      {
+        type: 'object',
+        properties: {
+          hello: 'number',
+        },
+        strict: true,
+      }
+    ),
+    true
+  );
+});
+
+Deno.test('Object is valid when strict mode is active and optional specified properties is not supplied', () => {
+  assertEquals(
+    validateObject(
+      {},
+      {
+        type: 'object',
+        properties: {
+          hello: 'number',
+        },
+        strict: true,
+      }
+    ),
+    true
+  );
+});
+
+Deno.test('Object is invalid when strict mode is active and more then specified properties are supplied', () => {
+  assertEquals(
+    validateObject(
+      {
+        hello: 1,
+        world: 2,
+      },
+      {
+        type: 'object',
+        properties: {
+          hello: 'number',
+        },
+        strict: true,
+      }
+    ),
+    false
+  );
+});

@@ -16,6 +16,19 @@ export default function validateObject(value: unknown, schema: ObjectValidationS
 
   // Check if every required property is present
   if (schema.required !== undefined && !schema.required.every((v) => Object.keys(value).includes(v))) {
+    // Not all requird properties have been specified which is invalid.
+    return false;
+  }
+
+  // Check if strict mode is active and only schema specified properties
+  // have been supplied
+  if (
+    schema.strict !== undefined &&
+    schema.properties !== undefined &&
+    !Object.keys(value).every((v) => Object.keys(schema?.properties ?? []).includes(v))
+  ) {
+    // More properties then in the schema specified have been supplied which is
+    // invalid in strict mode.
     return false;
   }
 

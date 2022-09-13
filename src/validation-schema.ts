@@ -21,7 +21,16 @@ export interface ObjectValidationSchema extends BaseValidationSchema {
     [k: string]: ValidationSchema | ValidationType;
   };
 
+  /**
+   * The properties that are required to exist.
+   */
   required?: string[];
+
+  /**
+   * If set the object is only considered valid when only the specified properties have
+   * been supplied.
+   */
+  strict?: boolean;
 
   /**
    * A set of custom rules that need to be valid for the object to be considered

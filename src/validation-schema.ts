@@ -18,21 +18,11 @@ export interface ObjectValidationSchema extends BaseValidationSchema {
    * If not specified any object is considered valid.
    */
   properties?: {
-    [k: string]:
-      | {
-          /**
-           * Whether or not the property is optional.
-           *
-           * If not specified the property is optional
-           */
-          required?: boolean;
-          /**
-           * The schema that the property has to match
-           */
-          schema: ValidationSchema | ValidationType;
-        }
-      | ValidationType;
+    [k: string]: ValidationSchema | ValidationType;
   };
+
+  required?: string[];
+
   /**
    * A set of custom rules that need to be valid for the object to be considered
    * valid as well.

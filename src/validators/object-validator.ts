@@ -5,11 +5,17 @@ export default function validateObject(value: unknown, schema: ObjectValidationS
   // Check if the value is of the object type.
   // If not it's invalid and we can stop the validation
   // process.
+
   if (typeof value !== 'object') {
     return false;
   }
 
   if (value === null) {
+    return false;
+  }
+
+  // Check if every required property is present
+  if (schema.required !== undefined && !schema.required.every((v) => Object.keys(value).includes(v))) {
     return false;
   }
 
@@ -20,23 +26,10 @@ export default function validateObject(value: unknown, schema: ObjectValidationS
     // whole object is considered invalid.
     !Object.entries(schema.properties).every(([key, property]) => {
       const valueField = (value as Record<string, unknown>)[key];
-      // Check if property is a shorthand
-      if (typeof property === 'string') {
-        property = {
-          required: false,
-          schema: property,
-        };
-      }
-
-      // Check if field exists when it's not optional
-      if ((property.required ?? false) && valueField === undefined) {
-        // Field did not exist although it's not optional which is invalid.
-        return false;
-      }
 
       // Check if field is defined.
       // If so we need to validate it as well.
-      if (valueField !== undefined && !validate(valueField, property.schema)) {
+      if (valueField !== undefined && !validate(valueField, property)) {
         // Field did not match the specified schema which is invalid.
         return false;
       }

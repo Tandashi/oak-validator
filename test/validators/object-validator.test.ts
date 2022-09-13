@@ -42,54 +42,12 @@ Deno.test('Object with non specified required is valid', () => {
         type: 'object',
         properties: {
           optionalValue: {
-            schema: {
-              type: 'string',
-            },
+            type: 'string',
           },
         },
       }
     ),
     true
-  );
-});
-
-Deno.test('Object with specified non-required field is valid', () => {
-  assertEquals(
-    validateObject(
-      {},
-      {
-        type: 'object',
-        properties: {
-          optionalValue: {
-            required: false,
-            schema: {
-              type: 'string',
-            },
-          },
-        },
-      }
-    ),
-    true
-  );
-});
-
-Deno.test('Object with specified required field is invalid', () => {
-  assertEquals(
-    validateObject(
-      {},
-      {
-        type: 'object',
-        properties: {
-          optionalValue: {
-            required: true,
-            schema: {
-              type: 'string',
-            },
-          },
-        },
-      }
-    ),
-    false
   );
 });
 
@@ -103,10 +61,7 @@ Deno.test('Object with specified required field but wrong type is invalid', () =
         type: 'object',
         properties: {
           optionalValue: {
-            required: false,
-            schema: {
-              type: 'string',
-            },
+            type: 'string',
           },
         },
       }
@@ -125,10 +80,7 @@ Deno.test('Object with specified required field and correct type is valid', () =
         type: 'object',
         properties: {
           optionalValue: {
-            required: false,
-            schema: {
-              type: 'string',
-            },
+            type: 'string',
           },
         },
       }
@@ -152,26 +104,11 @@ Deno.test('Object with shortform types is valid', () => {
       {
         type: 'object',
         properties: {
-          optionalString: {
-            required: false,
-            schema: 'string',
-          },
-          optionalNumber: {
-            required: false,
-            schema: 'number',
-          },
-          optionalBoolean: {
-            required: false,
-            schema: 'boolean',
-          },
-          optionalArray: {
-            required: false,
-            schema: 'array',
-          },
-          optionalObject: {
-            required: false,
-            schema: 'object',
-          },
+          optionalString: 'string',
+          optionalNumber: 'number',
+          optionalBoolean: 'boolean',
+          optionalArray: 'array',
+          optionalObject: 'object',
         },
       }
     ),
@@ -194,26 +131,11 @@ Deno.test('Object with shortform incorrect types is invalid', () => {
       {
         type: 'object',
         properties: {
-          optionalString: {
-            required: false,
-            schema: 'string',
-          },
-          optionalNumber: {
-            required: false,
-            schema: 'number',
-          },
-          optionalBoolean: {
-            required: false,
-            schema: 'boolean',
-          },
-          optionalArray: {
-            required: false,
-            schema: 'array',
-          },
-          optionalObject: {
-            required: false,
-            schema: 'object',
-          },
+          optionalString: 'string',
+          optionalNumber: 'number',
+          optionalBoolean: 'boolean',
+          optionalArray: 'array',
+          optionalObject: 'object',
         },
       }
     ),
@@ -313,5 +235,33 @@ Deno.test('Object is invalid when one customRule is invalid', () => {
       }
     ),
     false
+  );
+});
+
+Deno.test('Object is invalid when required property is not set', () => {
+  assertEquals(
+    validateObject(
+      {},
+      {
+        type: 'object',
+        required: ['hello'],
+      }
+    ),
+    false
+  );
+});
+
+Deno.test('Object is valid when all required properties are set', () => {
+  assertEquals(
+    validateObject(
+      {
+        hello: 1,
+      },
+      {
+        type: 'object',
+        required: ['hello'],
+      }
+    ),
+    true
   );
 });

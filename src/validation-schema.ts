@@ -56,7 +56,7 @@ export interface ArrayValidationSchema extends BaseValidationSchema {
    *
    * If not specified any array that matches the other citeria will be considered valid.
    */
-  itemValidator?: (item: unknown, index: number) => boolean;
+  itemValidator?: (item: unknown, index: number, array: unknown[]) => boolean;
 }
 
 /**

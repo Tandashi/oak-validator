@@ -1,6 +1,8 @@
-# Microservice Commons
+# Oak Validator
 
-This repository contains common modules for microservices.
+> :warning: Please use [Zod](https://github.com/colinhacks/zod). Does the same but has more features. 
+
+A validation library for Oak.
 
 ## Requirements
 
